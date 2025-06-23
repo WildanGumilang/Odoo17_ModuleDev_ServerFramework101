@@ -13,7 +13,7 @@ help:
 	@echo " psql"
 	@echo " logs odoo"
 	@echo " logs db"
-
+	@echo " addons <aaddons name>"
 start:
 	$(DOCKER_COMPOSE) up -d
 stop:
@@ -35,8 +35,21 @@ define log_target
 	)
 endef
 
+define upgrade_addons
+	$(DOCKER) exec -it $(CONTAINER_ODOO) odoo \
+		--db_host=$(CONTAINER_DB) \
+		-d $(WEB_DB_NAMES) \
+		-r $(CONTAINER_ODOO) \
+		-w $(CONTAINER_ODOO) \
+		-u $(1)
+endef
+
+addons: restart
+	timeout /T 5 > NUL
+	$(call upgrade_addons,$(word 2,$(MAKECMDGOALS)))
+
 
 logs:
 	$(call log_target,$(word 2,$(MAKECMDGOALS)))
 
-.PHONY: start stop restart console psql logs odoo db
+.PHONY: start stop restart console psql logs odoo db addons
