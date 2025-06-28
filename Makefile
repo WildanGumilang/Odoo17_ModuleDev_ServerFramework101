@@ -41,7 +41,7 @@ define upgrade_addons
 		-d $(WEB_DB_NAMES) \
 		-r $(CONTAINER_ODOO) \
 		-w $(CONTAINER_ODOO) \
-		-u $(1)
+		-u $(1) --dev xml
 endef
 
 addons: restart

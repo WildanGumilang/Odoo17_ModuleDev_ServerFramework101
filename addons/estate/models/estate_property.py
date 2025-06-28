@@ -6,7 +6,7 @@ class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = 'Estate Property'
 
-    name = fields.Char(required=True, string="Name")
+    name = fields.Char(required=True, string="Title")
     description = fields.Text(string="Description")
     postcode = fields.Char(string="Postcode")
     date_availability = fields.Date(string="Available From", copy=False, default=lambda self: fields.Datetime.now() + relativedelta(months=3))
