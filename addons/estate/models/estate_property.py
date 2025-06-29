@@ -7,6 +7,7 @@ from odoo import _, api, fields, models
 class EstateProperty(models.Model):
     _name = 'estate.property'
     _description = 'Estate Property'
+    _order = "id desc"
 
     name = fields.Char(required=True, string="Title")
     description = fields.Text(string="Description")
@@ -31,11 +32,14 @@ class EstateProperty(models.Model):
     )
     active = fields.Boolean(default=False)
     state = fields.Selection(
-        [('new', 'New'),
-         ('offer_received', 'Offer Received'),
-         ('offer_accepted', 'Offer Accepted'),
-         ('sold', 'Sold'),
-         ('canceled', 'Canceled')],
+        string="Status",
+        selection=[
+            ('new', 'New'),
+            ('offer_received', 'Offer Received'),
+            ('offer_accepted', 'Offer Accepted'),
+            ('sold', 'Sold'),
+            ('canceled', 'Canceled')
+        ],
         required=True,
         copy=False,
         default='new',
